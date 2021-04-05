@@ -1,0 +1,14 @@
+.chartCircle{
+  display: block;
+  width: 300px;
+  height: 300px;
+  circle{
+    stroke-width: 20%;
+    fill: none;
+    cx: 50%;
+    cy: 50%;
+    r: 40%;
+    transform-origin: center center;
+  }
+}
+
