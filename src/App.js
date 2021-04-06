@@ -3,13 +3,18 @@ import './App.css';
 import Diagram from "./components/diagram/diagram";
 
 function App() {
-    const fakeValues = [{ percent : 10 , color: "#f00" },{ percent: 30 , color : "#ff0" },{ percent: 60 , color: "#f0f" }]
+    const fakeValues = [{name: "user1", percent : 10 , color: "#f00" },{name:"user2", percent: 30 , color : "#ff0" },{name:"user3", percent: 60 , color: "#f0f" }]
 
 
   return (
     <div className="App">
       <header className="App-header">
-        <Diagram values={fakeValues}/>
+        <Diagram
+            height={400}
+            textColor={"#fff"}
+            // required array of object with name , percent , color for each diag
+            values={fakeValues}
+            />
       </header>
     </div>
   );

@@ -1,14 +1,43 @@
 .chartCircle{
   display: block;
-  width: 300px;
-  height: 300px;
+  width: auto;
+  text{
+    pointer-events: none;
+    stroke-width: 0;
+    font-family: helvetica, serif;
+    opacity: 0;
+    transition: 0.3s ease;
+    transition-property: opacity;
+  }
+  :nth-last-child(3n){
+    opacity: 1;
+    text-transform: uppercase;
+    font-size: 70%;
+  }
+  :nth-last-child(1n){
+    color: white;
+    font-size: 70%;
+  }
+  :last-child{
+    font-size: 50%;
+  }
   circle{
-    stroke-width: 20%;
+    stroke-width: 10%;
     fill: none;
     cx: 50%;
     cy: 50%;
     r: 40%;
+    transform: translateY(10);
     transform-origin: center center;
+    &:hover{
+      stroke-width: 5%;
+      ~ text{
+        opacity: 1;
+      }
+      ~ text:nth-last-child(3n){
+        opacity: 0;
+      }
+    }
   }
 }
 
