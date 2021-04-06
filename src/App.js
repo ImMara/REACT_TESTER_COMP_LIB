@@ -20,9 +20,9 @@ function App() {
             // required array of object with name , percent , color for each diag
             values={fakeValues}
             ecart={0.5}
-            title={"test"}
+            title={""}
             effect={"neon"}
-            // none , neon
+            // empty string or remove effect for normal mode , neon
             />
       </header>
     </div>

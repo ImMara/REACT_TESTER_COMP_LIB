@@ -8,8 +8,7 @@ const Diagram = (props) => {
         const value = props.effect
         switch (value) {
             case "neon" : return "0px 0px 2px"
-            case "none" : return "0px 0px 0px"
-            default : return "0px 0px 5px"
+            default : return "0px 0px 0px"
         }
     }
 
