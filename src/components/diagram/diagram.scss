@@ -9,7 +9,7 @@
     r: 40%;
     transform-origin: center center;
     &:hover{
-      stroke-width: 7%;
+      stroke-width: 15%;
       ~ text{
         opacity: 1;
       }
@@ -26,13 +26,14 @@
     transition: 0.3s ease;
     transition-property: opacity;
   }
-  & :nth-last-child(3n){
+  & :nth-last-child(3){
     opacity: 1;
     text-transform: uppercase;
     font-size: 70%;
   }
-  & :nth-last-child(2n){
+  & :nth-last-child(2){
     font-size: 70%;
+    font-weight:bold;
   }
   & :last-child{
     font-size: 50%;

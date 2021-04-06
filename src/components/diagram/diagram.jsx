@@ -65,13 +65,16 @@ const Diagram = (props) => {
                     dominantBaseline="middle"
                     stroke={props.textColor}
                     fill={props.textColor}
-                    textAnchor="middle">{ props.title }
+                    textAnchor="middle"
+                >{ props.title }
+
                 </text>
                 <text
                     x="50%" y="45%"
                     dominantBaseline="middle"
                     stroke={setSelectedColor}
                     fill={selectedColor}
+                    style={{ filter : "drop-shadow("+getColor()+" "+selectedColor+")"}}
                     textAnchor="middle">{ selectedPercent }%
                 </text>
                 <text

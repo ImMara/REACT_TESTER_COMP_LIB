@@ -3,7 +3,12 @@ import './App.css';
 import Diagram from "./components/diagram/diagram";
 
 function App() {
-    const fakeValues = [{name: "user1", percent : 10 , color: "#f00" },{name:"user2", percent: 30 , color : "#ff0" },{name:"user3", percent: 60 , color: "#f0f" }]
+    const fakeValues = [
+        {name: "user 1", percent : 10 , color: "#F34F41" },
+        {name:"user 2", percent: 30 , color : "#77DD78" },
+        {name:"user 3", percent: 33 , color: "#FBFA93" },
+        {name:"user 4", percent: 27 , color:"#FEFFF3" }
+    ]
 
 
   return (
@@ -16,7 +21,8 @@ function App() {
             values={fakeValues}
             ecart={0.5}
             title={"test"}
-            effect={"none"}
+            effect={"neon"}
+            // none , neon
             />
       </header>
     </div>
