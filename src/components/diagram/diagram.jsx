@@ -4,6 +4,15 @@ import {useEffect} from 'react';
 
 const Diagram = (props) => {
 
+    const getColor = () => {
+        const value = props.effect
+        switch (value) {
+            case "neon" : return "0px 0px 2px"
+            case "none" : return "0px 0px 0px"
+            default : return "0px 0px 5px"
+        }
+    }
+
     useEffect(()=>{
         document.querySelectorAll(".chartCircle").forEach((chart)=>{
             chart.setAttribute('viewBox',"0 0 100 100")
@@ -43,20 +52,20 @@ const Diagram = (props) => {
             <svg
                 className="chartCircle"
                 style={{height:props.height+"px"}}>
-                { props
-                    .values
-                    .map( values => (
-                    <circle
-                        percent={ values.percent }
-                        name={ values.name }
-                        stroke={ values.color }
-                    />
-                ))}
-                <text x="50%" y="51%"
-                             dominantBaseline="middle"
-                             stroke={props.textColor}
-                             fill={props.textColor}
-                             textAnchor="middle">{ props.title }
+              { props.values.map( values => (
+                <circle
+                    percent={ values.percent }
+                    name={ values.name }
+                    stroke={ values.color }
+                    style={{ filter : "drop-shadow("+getColor()+" "+values.color+")"}}
+                />
+              ))}
+                <text
+                    x="50%" y="51%"
+                    dominantBaseline="middle"
+                    stroke={props.textColor}
+                    fill={props.textColor}
+                    textAnchor="middle">{ props.title }
                 </text>
                 <text
                     x="50%" y="45%"

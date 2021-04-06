@@ -16,6 +16,7 @@ function App() {
             values={fakeValues}
             ecart={0.5}
             title={"test"}
+            effect={"none"}
             />
       </header>
     </div>
