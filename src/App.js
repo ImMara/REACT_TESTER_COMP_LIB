@@ -14,6 +14,8 @@ function App() {
             textColor={"#fff"}
             // required array of object with name , percent , color for each diag
             values={fakeValues}
+            ecart={0.5}
+            title={"test"}
             />
       </header>
     </div>
