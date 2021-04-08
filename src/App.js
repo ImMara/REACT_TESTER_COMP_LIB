@@ -13,7 +13,11 @@ function App() {
     ]
     const [values , setValues]   = useState(fakeValues)
     const handleChange = ( index , value ) =>{
-        values[index].percent = value;
+         values[index].percent = value;
+         setValues([...values])
+    }
+    const handle = () =>{
+
     }
 
 

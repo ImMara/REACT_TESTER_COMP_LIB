@@ -10,23 +10,26 @@ const RangeSlider = (props) => {
             default : return "0px 0px 0px"
         }
     }
+    let values = props.percent;
+    let chartSelector;
+    let coloredBar;
 
     useEffect(() => {
 
-            let chartSelector = document.querySelectorAll(".chartSelector span:first-child");
-            let coloredBar = document.querySelectorAll(".chartSelector span:nth-child(2)");
+            chartSelector = document.querySelectorAll(".chartSelector span:first-child");
+            coloredBar = document.querySelectorAll(".chartSelector span:nth-child(2)");
             let bar = document.querySelectorAll(".chartSelector");
 
-            let values = props.percent;
 
             document.addEventListener("mousemove", (e) => {
-               values = parseInt(Math.max(
+               values = Math.max(
                     0,
                     Math.min(100, ((e.clientX - bar[props.index].offsetLeft) / bar[props.index].clientWidth) * 100)
-                ));
+                );
             });
 
             bar[props.index].addEventListener("mousedown", (e) => {
+                resize()
                 document.addEventListener("mousemove", resize);
             });
 
@@ -44,17 +47,17 @@ const RangeSlider = (props) => {
             document.addEventListener("mouseup", (e) => {
                 document.removeEventListener("mousemove", resize);
             });
-
-            const resize = () => {
-                coloredBar[props.index].style.left = values+ "%";
-                coloredBar[props.index].style.width = values + "%";
-                chartSelector[props.index].style.left = values + "%";
-                setTest(values)
-            };
     })
+    const resize = () => {
+
+        props.change(props.index,values)
+
+        coloredBar[props.index].style.left = values+ "%";
+        coloredBar[props.index].style.width = values + "%";
+        chartSelector[props.index].style.left = values + "%";
+    };
     const [test , setTest] = useState()
 
-    props.change(props.index,test)
 
     return(
         <div className="chartSelector" style={{filter : "drop-shadow("+getColor()+" "+props.color+")"}}>
