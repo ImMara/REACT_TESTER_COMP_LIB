@@ -10,10 +10,13 @@
     transform-origin: center center;
     &:hover{
       stroke-width: 15%;
+      transition: 0.5s;
       ~ text{
+        transition: 0.5s;
         opacity: 1;
       }
       ~ text:nth-last-child(3n){
+        transition: 0.5s;
         opacity: 0;
       }
     }

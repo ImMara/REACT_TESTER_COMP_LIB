@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import './diagram.scss';
-import {useEffect} from 'react';
 
 const Diagram = (props) => {
 
