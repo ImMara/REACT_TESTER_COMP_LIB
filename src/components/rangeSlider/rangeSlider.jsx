@@ -22,13 +22,14 @@ const RangeSlider = (props) => {
 
 
             document.addEventListener("mousemove", (e) => {
-               values = Math.max(
+               values = parseInt(Math.max(
                     0,
                     Math.min(100, ((e.clientX - bar[props.index].offsetLeft) / bar[props.index].clientWidth) * 100)
-                );
+                ));
             });
 
             bar[props.index].addEventListener("mousedown", (e) => {
+                e.stopImmediatePropagation()
                 resize()
                 document.addEventListener("mousemove", resize);
             });
@@ -45,7 +46,7 @@ const RangeSlider = (props) => {
              });
 
             document.addEventListener("mouseup", (e) => {
-                document.removeEventListener("mousemove", resize);
+                document.removeEventListener("mousemove", resize,false);
             });
     })
     const resize = () => {

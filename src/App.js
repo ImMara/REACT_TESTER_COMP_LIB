@@ -16,10 +16,6 @@ function App() {
          values[index].percent = value;
          setValues([...values])
     }
-    const handle = () =>{
-
-    }
-
 
   return (
     <div className="App">
