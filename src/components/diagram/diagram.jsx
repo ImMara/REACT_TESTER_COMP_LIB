@@ -11,7 +11,6 @@ const Diagram = (props) => {
         }
     }
 
-    useEffect(()=>{
         document.querySelectorAll(".chartCircle").forEach((chart)=>{
             chart.setAttribute('viewBox',"0 0 100 100")
 
@@ -36,10 +35,9 @@ const Diagram = (props) => {
                     setSelectedName(name)
                     setSelectedColor(color)
                 })
-
             })
         })
-    },[])
+
 
     const [selectedPercent,setSelectedPercent] = useState();
     const [selectedName , setSelectedName ] = useState();

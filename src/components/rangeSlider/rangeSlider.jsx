@@ -49,6 +49,7 @@ const RangeSlider = (props) => {
                 document.removeEventListener("mousemove", resize,false);
             });
     })
+
     const resize = () => {
 
         props.change(props.index,values)
