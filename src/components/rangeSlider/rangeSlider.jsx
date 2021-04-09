@@ -1,41 +1,44 @@
-import React, {useState , useEffect} from 'react';
-import './rangeSlider.scss';
+import React, {useState , useEffect} from 'react'
+import './rangeSlider.scss'
 
 const RangeSlider = (props) => {
 
     const getColor = () => {
-        const value = props.effect
-        switch (value) {
+        const color = props.effect
+        switch (color) {
             case "neon" : return "0px 0px 2px"
             default : return "0px 0px 0px"
         }
     }
-    let values = props.percent;
-    let chartSelector;
-    let coloredBar;
+    let value = props.percent
+    let chartSelector
+    let coloredBar
 
     useEffect(() => {
 
-            chartSelector = document.querySelectorAll(".chartSelector span:first-child");
-            coloredBar = document.querySelectorAll(".chartSelector span:nth-child(2)");
-            let bar = document.querySelectorAll(".chartSelector");
+            chartSelector = document.querySelectorAll(".chartSelector span:first-child")
+            coloredBar = document.querySelectorAll(".chartSelector span:nth-child(2)")
+            let bar = document.querySelectorAll(".chartSelector")
 
 
             document.addEventListener("mousemove", (e) => {
-               values = Math.max(
+               value = Math.max(
                     0,
-                    Math.min(100, ((e.clientX - bar[props.index].offsetLeft) / bar[props.index].clientWidth) * 100)
-                );
-            });
+                    Math.min(
+                        props.max,
+                        ((e.clientX - bar[props.index].offsetLeft) / bar[props.index].clientWidth) * 100
+                    )
+                )
+            })
 
             bar[props.index].addEventListener("mousedown", (e) => {
                 e.stopImmediatePropagation()
                 resize()
-                document.addEventListener("mousemove", resize);
-            });
+                document.addEventListener("mousemove", resize)
+            })
 
             bar[props.index].addEventListener("touchmove", (e) => {
-                values = Math.max(
+                value = Math.max(
                     0,
                     Math.min(
                         100,
@@ -52,11 +55,13 @@ const RangeSlider = (props) => {
 
     const resize = () => {
 
-        props.change(props.index,parseFloat(values))
+        if(!props.lock){
+            props.change(props.index,parseFloat(value))
 
-        coloredBar[props.index].style.left = values+ "%";
-        coloredBar[props.index].style.width = values + "%";
-        chartSelector[props.index].style.left = values + "%";
+            coloredBar[props.index].style.left = value + "%";
+            coloredBar[props.index].style.width = value + "%";
+            chartSelector[props.index].style.left = value + "%";
+        }
     };
     const [test , setTest] = useState()
 
