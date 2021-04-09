@@ -40,67 +40,16 @@ function App() {
                     v.percent = 0
                 }
             }
-            console.log(v.percent.toFixed(4))
             // total2+=parseFloat(v.percent.toFixed(4))
         })
-        console.log(total2)
+
         values[index].percent = value;
         setValues([...values])
     }
 
-
-
-
-
-    const [x , setX]   = useState(10)
-    const [y , setY]   = useState(5)
-    const Test = (props) => {
-        const [n , setN]   = useState(100)
-        const [timer , setTimer]   = useState(null)
-
-        useEffect(() => {
-
-            console.log(n)
-            //console.log(props)
-
-            // if(timer) clearInterval(timer)
-            // setTimer(setInterval(
-            //     ()=>{
-            //         console.log(n)
-            //     }
-            // ,1000))
-            // console.log("click")
-
-        },[])
-
-        const add= () =>{
-            setN(n+1)
-        }
-
-        return (<>
-            <div onClick={add}>N: {n}</div>
-            <div>X: {props.x}</div>
-            <div>Y: {props.y}</div>
-        </>)
-    }
-    const incrementX = () =>{
-        setX(x+1)
-    }
-    const incrementY = () =>{
-        setY(y+1)
-    }
-
-
-
-
-
-
   return (
     <div className="App">
       <header className="App-header">
-        <Test x={x} y={y} />
-        <button onClick={incrementX} >X</button>
-        <button onClick={incrementY} >Y</button>
         <Diagram
             height={400}
             textColor={"#fff"}
