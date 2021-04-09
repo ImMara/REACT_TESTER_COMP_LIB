@@ -29,10 +29,10 @@ function App() {
         })
         values.forEach((v,i) =>{
             if( i !== index && !v.lock){
-                if(reste==0) v.percent += (100-(total)) / resteNbre
-                else v.percent += (100-(total)) * (v.percent/reste)
+                if(reste===0) v.percent += (100-(total)) / resteNbre
+                else v.percent += ((100-(total)) * (v.percent/reste))
                 if(v.percent<=0){
-                    value+=v.percent
+                    value+= v.percent
                     v.percent = 0
                 }
             }
@@ -47,7 +47,6 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-          <h1>{values[1].percent}</h1>
         <Diagram
             height={400}
             textColor={"#fff"}

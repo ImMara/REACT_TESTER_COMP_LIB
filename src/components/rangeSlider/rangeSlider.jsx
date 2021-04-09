@@ -32,8 +32,8 @@ const RangeSlider = (props) => {
             })
 
             bar[props.index].addEventListener("mousedown", (e) => {
-                e.stopImmediatePropagation()
                 resize()
+                e.stopImmediatePropagation()
                 document.addEventListener("mousemove", resize)
             })
 
@@ -56,7 +56,7 @@ const RangeSlider = (props) => {
     const resize = () => {
 
         if(!props.lock){
-            props.change(props.index,parseFloat(value))
+            props.change(props.index,parseInt(value))
 
             coloredBar[props.index].style.left = value + "%";
             coloredBar[props.index].style.width = value + "%";
@@ -67,9 +67,19 @@ const RangeSlider = (props) => {
 
 
     return(
-        <div className="chartSelector" style={{filter : "drop-shadow("+getColor()+" "+props.color+")"}}>
-            <span style={{left:props.percent+'%',backgroundColor: props.color , filter : "drop-shadow("+getColor()+" "+props.color+")"}} />
-            <span style={{left:props.percent+'%',width:props.percent+'%',backgroundColor: props.color , filter : "drop-shadow("+getColor()+" "+props.color+")"}} />
+        <div style={{display:'flex'}}>
+            <div className="chartSelector" style={{filter : "drop-shadow("+getColor()+" "+props.color+")"}}>
+                <span style={{left:props.percent+'%',backgroundColor: props.color , filter : "drop-shadow("+getColor()+" "+props.color+")"}} />
+                <span style={{left:props.percent+'%',width:props.percent+'%',backgroundColor: props.color , filter : "drop-shadow("+getColor()+" "+props.color+")"}} />
+            </div>
+            <div>
+                {props.lock === true ?
+                    <i className="fal fa-user-lock" style={{ marginLeft:"15px" , color:"#E3242B"}}/>
+                        :
+                    <i className="fal fa-user-unlock" style={{ marginLeft:"15px" , color:"#b0f2b6"}}/>
+                }
+            </div>
+            <div style={{ width:'500px',  marginLeft:"15px"}}> {value} %</div>
         </div>
     )
 }
