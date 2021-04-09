@@ -2,15 +2,15 @@ import logo from './logo.svg';
 import './App.css';
 import Diagram from "./components/diagram/diagram";
 import RangeSlider from "./components/rangeSlider/rangeSlider";
-import {useState,useEffect,useRef} from "react";
+import {useState} from "react";
 
 function App() {
     const fakeValues = [
-        {name: "user 0", percent : 20 , color: "#00ff00", lock: true, max:80 },
-        {name: "user 1", percent : 20 , color: "#F34F41", lock: false, max:80 },
-        {name:"user 2", percent: 20 , color : "#77DD78", lock: false, max:80 },
-        {name:"user 3", percent: 20 , color: "#FBFA93", lock: false, max:80 },
-        {name:"user 4", percent: 20 , color:"#FEFFF3", lock: false, max:80 }
+        {name: "user 0", percent : 20 , color: "#00ff00", lock: false, max:100 },
+        {name: "user 1", percent : 20 , color: "#F34F41", lock: false, max:100 },
+        {name:"user 2", percent: 20 , color : "#77DD78", lock: false, max:100 },
+        {name:"user 3", percent: 20 , color: "#FBFA93", lock: false, max:100 },
+        {name:"user 4", percent: 20 , color:"#FEFFF3", lock: false, max:100 }
     ]
 
     const [values , setValues]   = useState(fakeValues)
@@ -40,8 +40,9 @@ function App() {
                     v.percent = 0
                 }
             }
-            // total2+=parseFloat(v.percent.toFixed(4))
+            total2+=parseFloat(v.percent)
         })
+        console.log(total2)
 
         values[index].percent = value;
         setValues([...values])
