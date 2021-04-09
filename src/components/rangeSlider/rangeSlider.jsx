@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import './rangeSlider.scss'
 
 const RangeSlider = (props) => {
@@ -14,50 +14,45 @@ const RangeSlider = (props) => {
                 return "0px 0px 0px"
         }
     }
+
     let value = props.percent
     let chartSelector
     let coloredBar
     let bar;
 
-    chartSelector = document.querySelectorAll(".chartSelector span:first-child")
-    coloredBar = document.querySelectorAll(".chartSelector span:nth-child(2)")
-
-
-
     const [clickDown, setClickDown] = useState(false)
 
-    useEffect(() =>{
-        bar = document.querySelectorAll(".chartSelector")
-        console.log(bar[props.index].offsetLeft)
-        document.addEventListener("mousemove", (e) => {
-            value = Math.max(
-                0,
-                Math.min(
-                    props.max,
-                    ((e.clientX - bar[props.index].offsetLeft) / bar[props.index].clientWidth) * 100
-
-                )
-            )
-        })
-    })
-
     let x ;
-
-    document.addEventListener("mousemove",(e)=>{
-        x = e.clientX
-    })
-
-    const handleChartDown = (e) => {
-        const target = e.target
-        setClickDown(true)
-        resize()
-        document.addEventListener("mousemove", resize)
-    }
+    let target;
 
     document.addEventListener("mouseup", (e) => {
         setClickDown(false)
         document.removeEventListener("mousemove", resize, false);
     });
+
+    document.addEventListener("mousemove",(e)=>{
+        x = e.clientX
+        let bar = document.querySelector('.chartSelector')
+        value =Math.max( 0, Math.min( props.max, ( (x - bar.offsetLeft) / bar.clientWidth )*100))
+    })
+
+    const calcul = (target) => {
+        value = Math.max(
+            0,
+            Math.min(
+                props.max,
+                ((x - target.offsetLeft) / target.clientWidth) * 100
+            )
+        )
+    }
+
+    const handleChartDown = (e) => {
+        target = e.target
+        resize()
+        document.addEventListener("mousemove",resize )
+    }
+
+
 
     const resize = () => {
         if (!lock) {
@@ -74,9 +69,6 @@ const RangeSlider = (props) => {
     ));
     resize();
     }
-
-    const [test, setTest] = useState()
-
 
     return (
         <div style={{display: 'flex'}}>
