@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Diagram from "./components/diagram/diagram";
 import RangeSlider from "./components/rangeSlider/rangeSlider";
-import {useState} from "react";
+import {useState,useEffect,useRef} from "react";
 
 function App() {
     const fakeValues = [
@@ -15,6 +15,10 @@ function App() {
 
     const [values , setValues]   = useState(fakeValues)
 
+    const handleLocking = ( index , value ) =>{
+        values[index].lock = value;
+        setValues([...values])
+    }
     const handleChange = ( index , value ) =>{
         let total = 0
         let reste = 0
@@ -44,9 +48,59 @@ function App() {
         setValues([...values])
     }
 
+
+
+
+
+    const [x , setX]   = useState(10)
+    const [y , setY]   = useState(5)
+    const Test = (props) => {
+        const [n , setN]   = useState(100)
+        const [timer , setTimer]   = useState(null)
+
+        useEffect(() => {
+
+            console.log(n)
+            //console.log(props)
+
+            // if(timer) clearInterval(timer)
+            // setTimer(setInterval(
+            //     ()=>{
+            //         console.log(n)
+            //     }
+            // ,1000))
+            // console.log("click")
+
+        },[])
+
+        const add= () =>{
+            setN(n+1)
+        }
+
+        return (<>
+            <div onClick={add}>N: {n}</div>
+            <div>X: {props.x}</div>
+            <div>Y: {props.y}</div>
+        </>)
+    }
+    const incrementX = () =>{
+        setX(x+1)
+    }
+    const incrementY = () =>{
+        setY(y+1)
+    }
+
+
+
+
+
+
   return (
     <div className="App">
       <header className="App-header">
+        <Test x={x} y={y} />
+        <button onClick={incrementX} >X</button>
+        <button onClick={incrementY} >Y</button>
         <Diagram
             height={400}
             textColor={"#fff"}
@@ -57,22 +111,21 @@ function App() {
             effect={""}
             // empty string or remove effect for normal mode , neon
             />
-            <div>
-                { values.map((v,key) =>(
-                    <>
-                        <RangeSlider
-                            key={key}
-                            effect={''}
-                            index={key}
-                            color={v.color}
-                            max={v.max}
-                            lock={v.lock}
-                            percent={v.percent}
-                            change={handleChange}
-                        />
-                    </>
-                )) }
-            </div>
+        <div>
+            { values.map((v,key) =>(
+                <RangeSlider
+                    key={key}
+                    effect={''}
+                    index={key}
+                    color={v.color}
+                    max={v.max}
+                    lock={v.lock}
+                    percent={v.percent}
+                    change={handleChange}
+                    locking={handleLocking}
+                />
+            )) }
+        </div>
       </header>
     </div>
   );

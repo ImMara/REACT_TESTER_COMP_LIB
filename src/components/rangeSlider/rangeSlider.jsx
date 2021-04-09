@@ -3,6 +3,8 @@ import './rangeSlider.scss'
 
 const RangeSlider = (props) => {
 
+    const [lock , setLock] = useState(props.lock)
+
     const getColor = () => {
         const color = props.effect
         switch (color) {
@@ -16,9 +18,12 @@ const RangeSlider = (props) => {
 
     useEffect(() => {
 
+        // console.log("launch")
+
             chartSelector = document.querySelectorAll(".chartSelector span:first-child")
             coloredBar = document.querySelectorAll(".chartSelector span:nth-child(2)")
             let bar = document.querySelectorAll(".chartSelector")
+            let lockers = document.querySelectorAll(".locker")
 
 
             document.addEventListener("mousemove", (e) => {
@@ -31,6 +36,11 @@ const RangeSlider = (props) => {
                 )
             })
 
+            lockers[props.index].addEventListener("click", (e) => {
+                setLock(!lock)
+                // console.log(lock)
+                // props.locking(props.index,lock)
+            })
             bar[props.index].addEventListener("mousedown", (e) => {
                 resize()
                 e.stopImmediatePropagation()
@@ -55,7 +65,7 @@ const RangeSlider = (props) => {
 
     const resize = () => {
 
-        if(!props.lock){
+        if(!lock){
             props.change(props.index,parseInt(value))
 
             coloredBar[props.index].style.left = value + "%";
@@ -72,14 +82,14 @@ const RangeSlider = (props) => {
                 <span style={{left:props.percent+'%',backgroundColor: props.color , filter : "drop-shadow("+getColor()+" "+props.color+")"}} />
                 <span style={{left:props.percent+'%',width:props.percent+'%',backgroundColor: props.color , filter : "drop-shadow("+getColor()+" "+props.color+")"}} />
             </div>
-            <div>
-                {props.lock === true ?
+            <div className="locker">
+                {lock === true ?
                     <i className="fal fa-user-lock" style={{ marginLeft:"15px" , color:"#E3242B"}}/>
                         :
                     <i className="fal fa-user-unlock" style={{ marginLeft:"15px" , color:"#b0f2b6"}}/>
                 }
             </div>
-            <div style={{ width:'500px',  marginLeft:"15px"}}> {value} %</div>
+            <div style={{ width:'100px',  marginLeft:"15px",  whiteSpace:"nowrap"}}> {value} %</div>
         </div>
     )
 }
