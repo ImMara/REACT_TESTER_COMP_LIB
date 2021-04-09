@@ -10,23 +10,9 @@ const Diagram = (props) => {
             default : return "0px 0px 0px"
         }
     }
-
-        document.querySelectorAll(".chartCircle").forEach((chart)=>{
-            chart.setAttribute('viewBox',"0 0 100 100")
-
-            let step = 0
-            let ecart = props.ecart ? props.ecart : 0
-
-            chart.querySelectorAll("circle").forEach((circle)=>{
-                const p = parseFloat(circle.getAttribute('percent'))
-                const r = parseFloat(getComputedStyle(circle).getPropertyValue('r'))
-                const dash = Math.PI*r*2
-                circle.style.strokeDasharray = dash - ecart
-                circle.style.strokeDashoffset = dash - (p-ecart) * dash / 100
-                circle.style.transform = "rotate("+((step)*3.6-90)+"deg)"
-                step+=p
-
-                circle.addEventListener('mouseover', (e) =>{
+        useEffect(() => {
+            document.querySelectorAll('.chartCircle circle').forEach(c =>{
+                c.addEventListener('mouseover', (e) =>{
                     const target = e.target
                     const percent = target.getAttribute('percent')
                     const name = target.getAttribute('name')
@@ -36,7 +22,45 @@ const Diagram = (props) => {
                     setSelectedColor(color)
                 })
             })
+            document.querySelectorAll(".chartCircle").forEach((chart)=>{
+                chart.setAttribute('viewBox',"0 0 100 100")
+
+                let step = 0
+                let ecart = props.ecart ? props.ecart : 0
+
+                chart.querySelectorAll("circle").forEach((circle)=>{
+                    const p = parseFloat(circle.getAttribute('percent'))
+                    const r = parseFloat(getComputedStyle(circle).getPropertyValue('r'))
+                    const dash = Math.PI*r*2
+                    circle.style.strokeDasharray = dash - ecart
+                    circle.style.strokeDashoffset = dash - (p-ecart) * dash / 100
+                    circle.style.transform = "rotate("+((step)*3.6-90)+"deg)"
+                    step+=p
+
+                })
+            })
         })
+
+
+            document.querySelectorAll(".chartCircle").forEach((chart)=>{
+                chart.setAttribute('viewBox',"0 0 100 100")
+
+                let step = 0
+                let ecart = props.ecart ? props.ecart : 0
+
+                chart.querySelectorAll("circle").forEach((circle)=>{
+                    const p = parseFloat(circle.getAttribute('percent'))
+                    const r = parseFloat(getComputedStyle(circle).getPropertyValue('r'))
+                    const dash = Math.PI*r*2
+                    circle.style.strokeDasharray = dash - ecart
+                    circle.style.strokeDashoffset = dash - (p-ecart) * dash / 100
+                    circle.style.transform = "rotate("+((step)*3.6-90)+"deg)"
+                    step+=p
+
+                })
+            })
+
+
 
 
     const [selectedPercent,setSelectedPercent] = useState();
@@ -49,13 +73,14 @@ const Diagram = (props) => {
                 className="chartCircle"
                 style={{height:props.height+"px"}}>
               { props.values.map( values => (
+                  values.percent !== 0 ? (
                 <circle
                     percent={ values.percent }
                     name={ values.name }
                     stroke={ values.color }
                     style={{ filter : "drop-shadow("+getColor()+" "+values.color+")"}}
                 />
-              ))}
+                  ): null ))}
                 <text
                     x="50%" y="51%"
                     dominantBaseline="middle"

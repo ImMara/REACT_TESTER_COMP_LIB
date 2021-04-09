@@ -22,10 +22,10 @@ const RangeSlider = (props) => {
 
 
             document.addEventListener("mousemove", (e) => {
-               values = parseInt(Math.max(
+               values = Math.max(
                     0,
                     Math.min(100, ((e.clientX - bar[props.index].offsetLeft) / bar[props.index].clientWidth) * 100)
-                ));
+                );
             });
 
             bar[props.index].addEventListener("mousedown", (e) => {
@@ -35,13 +35,13 @@ const RangeSlider = (props) => {
             });
 
             bar[props.index].addEventListener("touchmove", (e) => {
-                values = parseInt(Math.max(
+                values = Math.max(
                     0,
                     Math.min(
                         100,
                         ((e.targetTouches[0].clientX - bar[props.index].offsetLeft) / bar[props.index].clientWidth) * 100
                     )
-                ));
+                );
                 resize();
              });
 
@@ -52,7 +52,7 @@ const RangeSlider = (props) => {
 
     const resize = () => {
 
-        props.change(props.index,values)
+        props.change(props.index,parseInt(values))
 
         coloredBar[props.index].style.left = values+ "%";
         coloredBar[props.index].style.width = values + "%";
