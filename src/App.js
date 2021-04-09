@@ -6,38 +6,31 @@ import {useState} from "react";
 
 function App() {
     const fakeValues = [
-        {name: "user 1", percent : 10 , color: "#F34F41" },
-        {name:"user 2", percent: 30 , color : "#77DD78" },
-        {name:"user 3", percent: 33 , color: "#FBFA93" },
-        {name:"user 4", percent: 27 , color:"#FEFFF3" }
+        {name: "user 0", percent : 94 , color: "#00ff00" },
+        {name: "user 1", percent : 2 , color: "#F34F41" },
+        {name:"user 2", percent: 1 , color : "#77DD78" },
+        {name:"user 3", percent: 2 , color: "#FBFA93" },
+        {name:"user 4", percent: 1 , color:"#FEFFF3" }
     ]
 
     const [values , setValues]   = useState(fakeValues)
 
     const handleChange = ( index , value ) =>{
-        let total = value
+        let total = 0
         values.forEach( (v,i) => {
             if( i !== index){
                 total += v.percent
-             //   if(total >= 100 ) {
-              //      let minus = ( total - 100 );
-              //      v.percent -= minus
-
-              //      if( v.percent < 0 ){v.percent =0}
-              //  }
             }
 
         })
-        let total2 = value ;
         values.forEach((v,i) =>{
-            if( total >= 100 ){
-                v.percent = v.percent*( 2 - total / 100 )
-                total2+= v.percent
+            if( i !== index){
+                if(total==0) v.percent += (100-(total+value)) / (values.length-1)
+                else v.percent += (100-(total+value)) * (v.percent/total)
             }
         })
-        console.log(total2)
-         values[index].percent = value;
-         setValues([...values])
+        values[index].percent = value;
+        setValues([...values])
     }
 
   return (
@@ -49,7 +42,7 @@ function App() {
             textColor={"#fff"}
             // required array of object with name , percent , color for each diag
             values={values}
-            ecart={"0.5"}
+            ecart={"0"}
             title={""}
             effect={""}
             // empty string or remove effect for normal mode , neon

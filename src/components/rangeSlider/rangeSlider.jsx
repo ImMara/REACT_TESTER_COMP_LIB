@@ -52,7 +52,7 @@ const RangeSlider = (props) => {
 
     const resize = () => {
 
-        props.change(props.index,parseInt(values))
+        props.change(props.index,parseFloat(values))
 
         coloredBar[props.index].style.left = values+ "%";
         coloredBar[props.index].style.width = values + "%";
