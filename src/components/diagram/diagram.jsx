@@ -41,23 +41,26 @@ const Diagram = (props) => {
             })
         })
 
-
             document.querySelectorAll(".chartCircle").forEach((chart)=>{
                 chart.setAttribute('viewBox',"0 0 100 100")
 
                 let step = 0
                 let ecart = props.ecart ? props.ecart : 0
 
+                let total = 0;
+
                 chart.querySelectorAll("circle").forEach((circle)=>{
                     const p = parseFloat(circle.getAttribute('percent'))
                     const r = parseFloat(getComputedStyle(circle).getPropertyValue('r'))
                     const dash = Math.PI*r*2
+                    total+=p
                     circle.style.strokeDasharray = dash - ecart
-                    circle.style.strokeDashoffset = dash - (p-ecart) * dash / 100
+                    circle.style.strokeDashoffset = (dash - (p-ecart) * dash / 100)
                     circle.style.transform = "rotate("+((step)*3.6-90)+"deg)"
                     step+=p
 
                 })
+                console.log(total)
             })
 
 

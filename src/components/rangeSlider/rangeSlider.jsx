@@ -43,6 +43,10 @@ const RangeSlider = (props) => {
         document.addEventListener("mousemove",resize )
     }
 
+    document.addEventListener("mouseup", (e) => {
+        setClickDown(false)
+        document.removeEventListener("mousemove", resize, false);
+    });
 
 
     const resize = () => {
@@ -53,12 +57,13 @@ const RangeSlider = (props) => {
 
     const handleChartTouch = (e) =>{
         value = Math.max(
-        0,
-        Math.min(
-      100,
-        ((e.targetTouches[0].clientX - e.target.offsetLeft) / e.target.clientWidth) * 100
-    ));
-    resize();
+            0,
+            Math.min(
+                100,
+                ((e.targetTouches[0].clientX - e.target.offsetLeft) / e.target.clientWidth) * 100
+            )
+        )
+        resize()
     }
 
     return (
