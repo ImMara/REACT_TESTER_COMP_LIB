@@ -2,9 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import Diagram from "./components/diagram/diagram";
 import RangeSlider from "./components/rangeSlider/rangeSlider";
-import {useState,useEffect,useRef} from "react";
+import {useState, useEffect, useRef, useCallback} from "react";
 
-function App() {
+function App(callback, deps) {
     const fakeValues = [
         {name: "user 0", percent : 20 , color: "#00ff00", lock: true, max:80 },
         {name: "user 1", percent : 20 , color: "#F34F41", lock: false, max:80 },
@@ -13,39 +13,41 @@ function App() {
         {name:"user 4", percent: 20 , color:"#FEFFF3", lock: false, max:80 }
     ]
 
-    const [values , setValues]   = useState(fakeValues)
+    const [values , setValues] = useState(fakeValues)
 
     const handleLocking = ( index , value ) =>{
+        let newValues = [...values]
         values[index].lock = value;
-        setValues([...values])
+        setValues(newValues)
     }
-    const handleChange = ( index , value ) =>{
+
+    const handleChange =useCallback( ( index , value ) => {
         let total = 0
         let reste = 0
         let resteNbre = 0
         let total2 = 0
-        values.forEach( (v,i) => {
+        values.forEach((v, i) => {
             total += v.percent
-            if( i !== index && !v.lock){
+            if (i !== index && !v.lock) {
                 reste += v.percent
                 resteNbre++
             }
         })
-        values.forEach((v,i) =>{
-            if( i !== index && !v.lock){
-                if(reste===0) v.percent += (100-(total)) / resteNbre
-                else v.percent += ((100-(total)) * (v.percent/reste))
-                if(v.percent<=0){
-                    value+= v.percent
+        values.forEach((v, i) => {
+            if (i !== index && !v.lock) {
+                if (reste === 0) v.percent += (100 - (total)) / resteNbre
+                else v.percent += Math.round((100 - (total)) * (v.percent / reste))
+                if (v.percent <= 0) {
+                    value +=  v.percent
                     v.percent = 0
                 }
             }
-            // total2+=parseFloat(v.percent.toFixed(4))
+            total2 += parseFloat(v.percent.toFixed(4))
         })
-
-        values[index].percent = value;
-        setValues([...values])
-    }
+        const newValue = [...values]
+        newValue[index].percent = Math.round(value)
+        setValues(newValue)
+    },[values])
 
   return (
     <div className="App">

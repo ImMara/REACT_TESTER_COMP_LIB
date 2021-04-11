@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useCallback} from 'react'
 import './rangeSlider.scss'
 
 const RangeSlider = (props) => {
@@ -30,21 +30,12 @@ const RangeSlider = (props) => {
         document.removeEventListener("mousemove", resize, false);
     });
 
-    document.addEventListener("mousemove",(e)=>{
+    document.addEventListener("mousemove",useCallback((e)=>{
         x = e.clientX
         let bar = document.querySelector('.chartSelector')
         value =Math.max( 0, Math.min( props.max, ( (x - bar.offsetLeft) / bar.clientWidth )*100))
-    })
+    }))
 
-    const calcul = (target) => {
-        value = Math.max(
-            0,
-            Math.min(
-                props.max,
-                ((x - target.offsetLeft) / target.clientWidth) * 100
-            )
-        )
-    }
 
     const handleChartDown = (e) => {
         target = e.target
@@ -56,7 +47,7 @@ const RangeSlider = (props) => {
 
     const resize = () => {
         if (!lock) {
-            props.change(props.index, parseInt(value))
+            props.change(props.index, Math.round(value))
         }
     };
 
