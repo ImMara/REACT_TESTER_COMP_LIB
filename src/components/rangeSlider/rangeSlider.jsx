@@ -25,35 +25,40 @@ const RangeSlider = (props) => {
     let x ;
     let target;
 
+    const resize = () => {
+        if (!lock) {
+            props.change(props.index, Math.round(value))
+        }
+    };
+
     document.addEventListener("mouseup", (e) => {
         setClickDown(false)
         document.removeEventListener("mousemove", resize, false);
     });
+    useEffect(()=>{
+        const handlemoves = (e) =>{
+            x = e.clientX
+            let bar = document.querySelector('.chartSelector')
+            value = Math.max( 0, Math.min( props.max, ( (x - bar.offsetLeft) / bar.clientWidth )*100))
+            console.log(value)
+        }
+        document.addEventListener("mousemove",handlemoves)
+        // return () =>{document.removeEventListener('mousemove',handlemoves)}
+    },)
 
-    document.addEventListener("mousemove",useCallback((e)=>{
-        x = e.clientX
-        let bar = document.querySelector('.chartSelector')
-        value =Math.max( 0, Math.min( props.max, ( (x - bar.offsetLeft) / bar.clientWidth )*100))
-    }))
 
 
     const handleChartDown = (e) => {
         target = e.target
         resize()
         document.addEventListener("mousemove",resize )
+        return ()=> document.removeEventListener('mousemove',resize)
     }
 
-    document.addEventListener("mouseup", (e) => {
-        setClickDown(false)
-        document.removeEventListener("mousemove", resize, false);
-    });
-
-
-    const resize = () => {
-        if (!lock) {
-            props.change(props.index, Math.round(value))
-        }
-    };
+   // document.addEventListener("mouseup", (e) => {
+   //     setClickDown(false)
+   //     document.removeEventListener("mousemove", resize, false);
+    //});
 
     const handleChartTouch = (e) =>{
         value = Math.max(

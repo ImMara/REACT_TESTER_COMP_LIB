@@ -45,8 +45,8 @@ function App(callback, deps) {
             total2 += parseFloat(v.percent.toFixed(4))
         })
         const newValue = [...values]
-        newValue[index].percent = Math.round(value)
-        setValues(newValue)
+        values[index].percent = Math.round(value)
+        setValues([...values])
     },[values])
 
   return (
@@ -61,7 +61,8 @@ function App(callback, deps) {
             title={""}
             effect={""}
             // empty string or remove effect for normal mode , neon
-            />
+        >
+        </Diagram>
         <div>
             { values.map((v,key) =>(
                 <RangeSlider

@@ -110,6 +110,7 @@ const Diagram = (props) => {
                     textAnchor="middle">{ selectedName }
                 </text>
             </svg>
+
         </>
     )
 }
