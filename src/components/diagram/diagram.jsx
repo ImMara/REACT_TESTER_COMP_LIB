@@ -60,7 +60,7 @@ const Diagram = (props) => {
                     step+=p
 
                 })
-                console.log(total)
+               // console.log(total)
             })
 
 

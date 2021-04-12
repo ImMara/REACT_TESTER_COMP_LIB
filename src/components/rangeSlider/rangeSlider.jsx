@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react'
+import React, {useState, useEffect, useRef, useCallback, useLayoutEffect} from 'react'
 import './rangeSlider.scss'
 
 const RangeSlider = (props) => {
@@ -16,49 +16,40 @@ const RangeSlider = (props) => {
     }
 
     let value = props.percent
-    let chartSelector
-    let coloredBar
-    let bar;
+
+    const myBar = useRef(null)
 
     const [clickDown, setClickDown] = useState(false)
-
     let x ;
     let target;
 
     const resize = () => {
         if (!lock) {
-            props.change(props.index, Math.round(value))
+            props.change(props.index, value)
         }
     };
 
-    document.addEventListener("mouseup", (e) => {
-        setClickDown(false)
-        document.removeEventListener("mousemove", resize, false);
-    });
     useEffect(()=>{
+        let  bar = myBar.current
+
         const handlemoves = (e) =>{
             x = e.clientX
-            let bar = document.querySelector('.chartSelector')
             value = Math.max( 0, Math.min( props.max, ( (x - bar.offsetLeft) / bar.clientWidth )*100))
-            console.log(value)
+            //console.log(value)
         }
+
         document.addEventListener("mousemove",handlemoves)
-        // return () =>{document.removeEventListener('mousemove',handlemoves)}
-    },)
 
-
+        document.addEventListener("mouseup", (e) => {
+            document.removeEventListener("mousemove", resize, false);
+        });
+    })
 
     const handleChartDown = (e) => {
         target = e.target
         resize()
         document.addEventListener("mousemove",resize )
-        return ()=> document.removeEventListener('mousemove',resize)
     }
-
-   // document.addEventListener("mouseup", (e) => {
-   //     setClickDown(false)
-   //     document.removeEventListener("mousemove", resize, false);
-    //});
 
     const handleChartTouch = (e) =>{
         value = Math.max(
@@ -72,7 +63,7 @@ const RangeSlider = (props) => {
     }
 
     return (
-        <div style={{display: 'flex'}}>
+        <div style={{display: 'flex'}} ref={myBar} className={"test"}>
             <div
                 onMouseDown={handleChartDown}
                 onTouchMove={handleChartTouch}
@@ -80,6 +71,7 @@ const RangeSlider = (props) => {
                 style={{filter: "drop-shadow(" + getColor() + " " + props.color + ")"}}
             >
                 <span
+
                     style={{
                         left: props.percent + '%',
                         backgroundColor: props.color,
