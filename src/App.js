@@ -49,8 +49,6 @@ function App(callback, deps) {
         setValues([...values])
     }
 
-
-
   return (
     <div className="App">
       <header className="App-header">

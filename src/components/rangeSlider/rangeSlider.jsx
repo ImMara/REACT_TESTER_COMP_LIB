@@ -17,21 +17,11 @@ const RangeSlider = (props) => {
 
     const myBar = useRef(null)
 
-    const [clickDown, setClickDown] = useState(false)
-
     let value ;
-    let target;
-
     let x;
-
-    useEffect(()=>{
-        let  bar = myBar.current
-    })
-
     let bol = false;
 
     useEffect(()=>{
-        console.log(myBar.current)
         const handlemoves = (e) =>{
             x = e.clientX
             if(bol) {
@@ -59,14 +49,7 @@ const RangeSlider = (props) => {
         }
     },[bol])
 
-
-    // const handleChartDown = (e) => {
-    //     bol = true;
-    //     calculus()
-    // }
-
-
-
+    //MOBILE A FAIRE
     // const handleChartTouch = (e) =>{
     //     value = Math.max(
     //         0,
@@ -82,8 +65,6 @@ const RangeSlider = (props) => {
         <div style={{display: 'flex'}} className={"test"}>
             <div
                 ref={myBar}
-                // onMouseDown={()=>{console.log("test")}}
-                // onTouchMove={handleChartTouch}
                 className="chartSelector"
                 style={{filter: "drop-shadow(" + getColor() + " " + props.color + ")"}}
             >
