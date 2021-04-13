@@ -40,8 +40,11 @@ const RangeSlider = (props) => {
         myBar.current.onmousedown = function (){
             calculus()
             bol=true;
-            props.change(props.index, parseFloat(value))
+            if(!lock){
+                props.change(props.index, parseFloat(value))
+            }
         }
+        console.log()
         window.addEventListener("mouseup", switcher);
         window.addEventListener("mousemove",handlemoves);
         return () => {

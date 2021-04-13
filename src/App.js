@@ -45,7 +45,7 @@ function App(callback, deps) {
             }
             total2 += parseFloat(v.percent)
         })
-        console.log(value)
+        //console.log(value)
         const newValues = [...values]
         newValues[index].percent=value
         setValues(newValues)
