@@ -49,7 +49,6 @@ function App(callback, deps) {
         const newValues = [...values]
         newValues[index].percent=value
         setValues(newValues)
-
     },[values]);
 
   return (

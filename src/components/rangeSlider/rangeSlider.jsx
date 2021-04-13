@@ -19,39 +19,40 @@ const RangeSlider = (props) => {
 
     let value = props.percent ;
     let x;
-    let bol = false;
+    let bool = false;
+    let maxPercent= 100;
+    let mathMin = 0;
 
     useEffect(()=>{
-        const handlemoves = (e) =>{
+        const handleMoves = (e) =>{
             x = e.clientX
-            if(bol) {
-                calculus()
+            if(bool) {
+                percentCalc()
             }
         }
         const switcher = () =>{
-            bol = false;
+            bool = false;
         }
-        const calculus = () =>{
-           value = Math.max(0, Math.min(props.max, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * 100))
+        const percentCalc = () =>{
+           value = Math.max(mathMin, Math.min(props.max, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * maxPercent))
             if (!lock) {
               props.change(props.index, parseFloat(value))
             }
         }
         myBar.current.onmousedown = function (){
-            calculus()
-            bol=true;
+            percentCalc()
+            bool=true;
             if(!lock){
                 props.change(props.index, parseFloat(value))
             }
         }
-        console.log()
         window.addEventListener("mouseup", switcher);
-        window.addEventListener("mousemove",handlemoves);
+        window.addEventListener("mousemove",handleMoves);
         return () => {
             window.removeEventListener('mouseup',switcher);
-            window.removeEventListener('mousemove',handlemoves);
+            window.removeEventListener('mousemove',handleMoves);
         }
-    },[bol])
+    },[bool])
 
     //MOBILE A FAIRE
     // const handleChartTouch = (e) =>{
