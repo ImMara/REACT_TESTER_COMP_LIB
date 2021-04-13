@@ -82,9 +82,9 @@ const RangeSlider = (props) => {
                 <span
                     style={{
                         left: props.percent + '%',
-                        width: props.percent + '%',
+                        width: props.percent+1 + '%',
                         backgroundColor: props.color,
-                        filter: "drop-shadow(" + getColor() + " " + props.color + ")"
+                        filter: "drop-shadow(" + getColor() + " " + props.color + ")",
                     }}
                 />
             </div>
