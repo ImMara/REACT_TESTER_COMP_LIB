@@ -17,7 +17,7 @@ const RangeSlider = (props) => {
 
     const myBar = useRef(null)
 
-    let value ;
+    let value = props.percent ;
     let x;
     let bol = false;
 
@@ -31,15 +31,16 @@ const RangeSlider = (props) => {
         const switcher = () =>{
             bol = false;
         }
-        const calculus = ()=>{
-            value = Math.max(0, Math.min(props.max, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * 100))
+        const calculus = () =>{
+           value = Math.max(0, Math.min(props.max, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * 100))
             if (!lock) {
-                props.change(props.index, parseFloat(value))
+              props.change(props.index, parseFloat(value))
             }
         }
         myBar.current.onmousedown = function (){
-            bol=true;
             calculus()
+            bol=true;
+            props.change(props.index, parseFloat(value))
         }
         window.addEventListener("mouseup", switcher);
         window.addEventListener("mousemove",handlemoves);
@@ -69,7 +70,6 @@ const RangeSlider = (props) => {
                 style={{filter: "drop-shadow(" + getColor() + " " + props.color + ")"}}
             >
                 <span
-
                     style={{
                         left: props.percent + '%',
                         backgroundColor: props.color,

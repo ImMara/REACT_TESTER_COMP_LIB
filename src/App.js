@@ -21,7 +21,8 @@ function App(callback, deps) {
         setValues(newValues)
     }
 
-    const handleChange =( index , value ) => {
+    let handleChange;
+    handleChange = useCallback((index, value) => {
         let total = 0
         let reste = 0
         let resteNbre = 0
@@ -38,16 +39,18 @@ function App(callback, deps) {
                 if (reste === 0) v.percent += (100 - (total)) / resteNbre
                 else v.percent += (100 - (total)) * (v.percent / reste)
                 if (v.percent <= 0) {
-                    value +=  v.percent
+                    value += v.percent
                     v.percent = 0
                 }
             }
             total2 += parseFloat(v.percent)
         })
         console.log(value)
-        values[index].percent = value
-        setValues([...values])
-    }
+        const newValues = [...values]
+        newValues[index].percent=value
+        setValues(newValues)
+
+    },[values]);
 
   return (
     <div className="App">
