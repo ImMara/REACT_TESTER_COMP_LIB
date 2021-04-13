@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useCallback, useLayoutEffect} from 'react'
+import React, {useState, useEffect, useRef, useCallback, useLayoutEffect, useContext} from 'react'
 import './rangeSlider.scss'
 
 const RangeSlider = (props) => {
@@ -15,58 +15,75 @@ const RangeSlider = (props) => {
         }
     }
 
-    let value = props.percent
-
     const myBar = useRef(null)
 
     const [clickDown, setClickDown] = useState(false)
-    let x ;
+
+    let value ;
     let target;
 
-    const resize = () => {
-        if (!lock) {
-            props.change(props.index, value)
-        }
-    };
+    let x;
 
     useEffect(()=>{
         let  bar = myBar.current
-
-        const handlemoves = (e) =>{
-            x = e.clientX
-            value = Math.max( 0, Math.min( props.max, ( (x - bar.offsetLeft) / bar.clientWidth )*100))
-            //console.log(value)
-        }
-
-        document.addEventListener("mousemove",handlemoves)
-
-        document.addEventListener("mouseup", (e) => {
-            document.removeEventListener("mousemove", resize, false);
-        });
     })
 
-    const handleChartDown = (e) => {
-        target = e.target
-        resize()
-        document.addEventListener("mousemove",resize )
-    }
+    let bol = false;
 
-    const handleChartTouch = (e) =>{
-        value = Math.max(
-            0,
-            Math.min(
-                100,
-                ((e.targetTouches[0].clientX - e.target.offsetLeft) / e.target.clientWidth) * 100
-            )
-        )
-        resize()
-    }
+    useEffect(()=>{
+        console.log(myBar.current)
+        const handlemoves = (e) =>{
+            x = e.clientX
+            if(bol) {
+                calculus()
+            }
+        }
+        const switcher = () =>{
+            bol = false;
+        }
+        const calculus = ()=>{
+            value = Math.max(0, Math.min(props.max, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * 100))
+            if (!lock) {
+                props.change(props.index, parseFloat(value))
+            }
+        }
+        myBar.current.onmousedown = function (){
+            bol=true;
+            calculus()
+        }
+        window.addEventListener("mouseup", switcher);
+        window.addEventListener("mousemove",handlemoves);
+        return () => {
+            window.removeEventListener('mouseup',switcher);
+            window.removeEventListener('mousemove',handlemoves);
+        }
+    },[bol])
+
+
+    // const handleChartDown = (e) => {
+    //     bol = true;
+    //     calculus()
+    // }
+
+
+
+    // const handleChartTouch = (e) =>{
+    //     value = Math.max(
+    //         0,
+    //         Math.min(
+    //             100,
+    //             ((e.targetTouches[0].clientX - e.target.offsetLeft) / e.target.clientWidth) * 100
+    //         )
+    //     )
+    //     resize()
+    // }
 
     return (
-        <div style={{display: 'flex'}} ref={myBar} className={"test"}>
+        <div style={{display: 'flex'}} className={"test"}>
             <div
-                onMouseDown={handleChartDown}
-                onTouchMove={handleChartTouch}
+                ref={myBar}
+                // onMouseDown={()=>{console.log("test")}}
+                // onTouchMove={handleChartTouch}
                 className="chartSelector"
                 style={{filter: "drop-shadow(" + getColor() + " " + props.color + ")"}}
             >
@@ -94,7 +111,7 @@ const RangeSlider = (props) => {
                     <i className="fal fa-user-unlock" style={{marginLeft: "15px", color: "#b0f2b6"}}/>
                 }
             </div>
-            <div style={{width: '100px', marginLeft: "15px", whiteSpace: "nowrap"}}> {value} %</div>
+            <div style={{width: '100px', marginLeft: "15px", whiteSpace: "nowrap"}}> {props.percent.toFixed(2)} %</div>
         </div>
     )
 }

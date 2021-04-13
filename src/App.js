@@ -21,7 +21,7 @@ function App(callback, deps) {
         setValues(newValues)
     }
 
-    const handleChange =useCallback( ( index , value ) => {
+    const handleChange =( index , value ) => {
         let total = 0
         let reste = 0
         let resteNbre = 0
@@ -36,18 +36,20 @@ function App(callback, deps) {
         values.forEach((v, i) => {
             if (i !== index && !v.lock) {
                 if (reste === 0) v.percent += (100 - (total)) / resteNbre
-                else v.percent += Math.round((100 - (total)) * (v.percent / reste))
+                else v.percent += (100 - (total)) * (v.percent / reste)
                 if (v.percent <= 0) {
                     value +=  v.percent
                     v.percent = 0
                 }
             }
-            total2 += parseFloat(v.percent.toFixed(4))
+            total2 += parseFloat(v.percent)
         })
-        const newValue = [...values]
-        values[index].percent = Math.round(value)
+        console.log(value)
+        values[index].percent = value
         setValues([...values])
-    },[values])
+    }
+
+
 
   return (
     <div className="App">
