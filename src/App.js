@@ -15,9 +15,14 @@ function App(callback, deps) {
 
     const [values , setValues] = useState(fakeValues)
 
-    const handleLocking = ( index , value ) =>{
+    let handleLock;
+    handleLock = ( index , value ) =>{
         let newValues = [...values]
-        values[index].lock = value;
+        newValues[index].lock = value;
+        let total = 0;
+        newValues.filter(v=> v.lock === true ).map( val => total += val.percent)
+        total = 100 - total
+        newValues.forEach(v => v.max = total)
         setValues(newValues)
     }
 
@@ -76,7 +81,7 @@ function App(callback, deps) {
                     lock={v.lock}
                     percent={v.percent}
                     change={handleChange}
-                    locking={handleLocking}
+                    locking={handleLock}
                 />
             )) }
         </div>

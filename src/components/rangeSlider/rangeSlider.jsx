@@ -3,7 +3,7 @@ import './rangeSlider.scss'
 
 const RangeSlider = (props) => {
 
-    const [lock, setLock] = useState(props.lock)
+
 
     const getColor = () => {
         const color = props.effect
@@ -16,6 +16,7 @@ const RangeSlider = (props) => {
     }
 
     const myBar = useRef(null)
+    const myLocker = useRef(null)
 
     let value = props.percent ;
     let x;
@@ -23,18 +24,23 @@ const RangeSlider = (props) => {
     let maxPercent= 100;
     let mathMin = 0;
 
+    let lock = props.lock;
+    let mathMax= props.max;
+    console.log(props.max)
     useEffect(()=>{
+
         const handleMoves = (e) =>{
             x = e.clientX
             if(bool) {
                 percentCalc()
             }
         }
+
         const switcher = () =>{
             bool = false;
         }
         const percentCalc = () =>{
-           value = Math.max(mathMin, Math.min(props.max, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * maxPercent))
+           value = Math.max(mathMin, Math.min(mathMax, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * maxPercent))
             if (!lock) {
               props.change(props.index, parseFloat(value))
             }
@@ -46,13 +52,19 @@ const RangeSlider = (props) => {
                 props.change(props.index, parseFloat(value))
             }
         }
+
+        myLocker.current.onclick = function (){
+            lock = !lock
+            console.log(lock)
+            props.locking(props.index,lock)
+        }
         window.addEventListener("mouseup", switcher);
         window.addEventListener("mousemove",handleMoves);
         return () => {
             window.removeEventListener('mouseup',switcher);
             window.removeEventListener('mousemove',handleMoves);
         }
-    },[bool])
+    },[bool,props.max])
 
     //MOBILE A FAIRE
     // const handleChartTouch = (e) =>{
@@ -89,7 +101,7 @@ const RangeSlider = (props) => {
                     }}
                 />
             </div>
-            <div className="locker">
+            <div className="locker" ref={myLocker}>
                 {lock === true ?
                     <i className="fal fa-user-lock" style={{marginLeft: "15px", color: "#E3242B"}}/>
                     :
