@@ -26,7 +26,7 @@ const RangeSlider = (props) => {
 
     let lock = props.lock;
     let mathMax= props.max;
-    console.log(props.max)
+    // console.log(props.max)
     useEffect(()=>{
 
         const handleMoves = (e) =>{
@@ -35,27 +35,25 @@ const RangeSlider = (props) => {
                 percentCalc()
             }
         }
-
         const switcher = () =>{
             bool = false;
         }
         const percentCalc = () =>{
            value = Math.max(mathMin, Math.min(mathMax, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * maxPercent))
             if (!lock) {
-              props.change(props.index, parseFloat(value))
+              props.change(props.index, parseInt(value))
             }
         }
         myBar.current.onmousedown = function (){
             percentCalc()
             bool=true;
             if(!lock){
-                props.change(props.index, parseFloat(value))
+                props.change(props.index, parseInt(value))
             }
         }
-
         myLocker.current.onclick = function (){
             lock = !lock
-            console.log(lock)
+            // console.log(lock)
             props.locking(props.index,lock)
         }
         window.addEventListener("mouseup", switcher);
@@ -108,7 +106,7 @@ const RangeSlider = (props) => {
                     <i className="fal fa-user-unlock" style={{marginLeft: "15px", color: "#b0f2b6"}}/>
                 }
             </div>
-            <div style={{width: '100px', marginLeft: "15px", whiteSpace: "nowrap"}}> {props.percent.toFixed(2)} %</div>
+            <div style={{width: '100px', marginLeft: "15px", whiteSpace: "nowrap"}}> {props.percent} %</div>
         </div>
     )
 }
