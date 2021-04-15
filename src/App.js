@@ -14,10 +14,10 @@ function App(callback, deps) {
     // ]
 
     const fakeValues = [
-        {name: "user 0", percent : 150 , color: "#00ff00", lock: true, max:80 },
-        {name: "user 1", percent : 20 , color: "#F34F41", lock: false, max:80 },
-        {name:"user 2", percent: 200 , color : "#77DD78", lock: false, max:80 },
-        {name:"user 3", percent: 80 , color: "#FBFA93", lock: false, max:80 },
+        {name: "user 0", percent : 80, color: "#00ff00", lock: true, max:80 },
+        {name: "user 1", percent : 20, color: "#F34F41", lock: false, max:80 },
+        {name:"user 2", percent: 100, color : "#77DD78", lock: false, max:80 },
+        {name:"user 3", percent: 80, color: "#FBFA93", lock: false, max:80 },
         {name:"user 4", percent: 50, color:"#FEFFF3", lock: false, max:80 }
     ]
 
@@ -67,7 +67,10 @@ function App(callback, deps) {
 
     let handleChange;
     handleChange = useCallback((index,value) =>{
-
+      // console.log(index,value)
+      let newValues = [...values]
+      newValues[index].percent = value;
+      setValues(newValues)
     },[values])
 
   return (
@@ -80,7 +83,6 @@ function App(callback, deps) {
             values={values}
             ecart={"0"}
             title={""}
-            effect={""}
             // empty string or remove effect for normal mode , neon
         >
         </Diagram>
@@ -88,14 +90,9 @@ function App(callback, deps) {
             { values.map((v,key) =>(
                 <RangeSlider
                     key={key}
-                    effect={''}
-                    index={key}
                     color={v.color}
-                    max={v.max}
-                    lock={v.lock}
                     percent={v.percent}
-                    change={handleChange}
-                    locking={handleLock}
+                    change={(value)=>handleChange(key,value)}
                 />
             )) }
         </div>

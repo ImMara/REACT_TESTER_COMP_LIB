@@ -7,16 +7,15 @@
     cx: 50%;
     cy: 50%;
     r: 40%;
+    transition: 0.5s ease;
+    transition-property: stroke-width;
     transform-origin: center center;
     &:hover{
       stroke-width: 13%;
-      transition: 0.5s;
       ~ text{
-        transition: 0.5s;
         opacity: 1;
       }
       ~ text:nth-last-child(3n){
-        transition: 0.5s;
         opacity: 0;
       }
     }

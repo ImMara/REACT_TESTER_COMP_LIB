@@ -3,58 +3,33 @@ import './rangeSlider.scss'
 
 const RangeSlider = (props) => {
 
-
-
-    const getColor = () => {
-        const color = props.effect
-        switch (color) {
-            case "neon" :
-                return "0px 0px 2px"
-            default :
-                return "0px 0px 0px"
-        }
-    }
-
     const myBar = useRef(null)
-    const myLocker = useRef(null)
 
-    let value = props.percent ;
-    let x;
-    let bool = false;
-    let maxPercent= 100;
-    let mathMin = 0;
+    const [value , setValue] = useState(props.percent)
+    let x
+    let clicked = false
+    let maxPercent = 100
+    let minPercent = 0
 
-    let lock = props.lock;
-    let mathMax= props.max;
-    // console.log(props.max)
     useEffect(()=>{
 
         const handleMoves = (e) =>{
             x = e.clientX
-            if(bool) {
+            if(clicked) {
                 percentCalc()
             }
         }
         const switcher = () =>{
-            bool = false;
+            clicked = false
         }
         const percentCalc = () =>{
-           value = Math.max(mathMin, Math.min(mathMax, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * maxPercent))
-            if (!lock) {
-              props.change(props.index, parseInt(value))
-            }
+            const temp = parseInt(Math.max(minPercent, Math.min(maxPercent, ((x - myBar.current.offsetLeft) / myBar.current.clientWidth) * 100)))
+            setValue(temp)
+            props.change(temp)
         }
         myBar.current.onmousedown = function (){
             percentCalc()
-            bool=true;
-            if(!lock){
-                props.change(props.index, parseInt(value))
-            }
-        }
-        myLocker.current.onclick = function (){
-            lock = !lock
-            // console.log(lock)
-            props.locking(props.index,lock)
+            clicked=true
         }
         window.addEventListener("mouseup", switcher);
         window.addEventListener("mousemove",handleMoves);
@@ -62,7 +37,9 @@ const RangeSlider = (props) => {
             window.removeEventListener('mouseup',switcher);
             window.removeEventListener('mousemove',handleMoves);
         }
-    },[bool,props.max])
+    },[clicked])
+
+    // props.change(value)
 
     //MOBILE A FAIRE
     // const handleChartTouch = (e) =>{
@@ -81,32 +58,22 @@ const RangeSlider = (props) => {
             <div
                 ref={myBar}
                 className="chartSelector"
-                style={{filter: "drop-shadow(" + getColor() + " " + props.color + ")"}}
             >
                 <span
                     style={{
-                        left: props.percent + '%',
+                        left: value + '%',
                         backgroundColor: props.color,
-                        filter: "drop-shadow(" + getColor() + " " + props.color + ")"
                     }}
                 />
                 <span
                     style={{
-                        left: props.percent + '%',
-                        width: props.percent+1 + '%',
+                        left: value + '%',
+                        width: value + '%',
                         backgroundColor: props.color,
-                        filter: "drop-shadow(" + getColor() + " " + props.color + ")",
                     }}
                 />
             </div>
-            <div className="locker" ref={myLocker}>
-                {lock === true ?
-                    <i className="fal fa-user-lock" style={{marginLeft: "15px", color: "#E3242B"}}/>
-                    :
-                    <i className="fal fa-user-unlock" style={{marginLeft: "15px", color: "#b0f2b6"}}/>
-                }
-            </div>
-            <div style={{width: '100px', marginLeft: "15px", whiteSpace: "nowrap"}}> {props.percent} %</div>
+            <div style={{width: '100px', marginLeft: "15px", whiteSpace: "nowrap"}}> {value} %</div>
         </div>
     )
 }

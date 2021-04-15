@@ -12,7 +12,9 @@ body{
   border-radius: 5px;
   border: 1px solid #aaaebc;
   box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.15);
-   span{
+  user-select: none;
+
+  span{
      &:first-child{
       z-index: 2;
       display: block;
@@ -28,7 +30,7 @@ body{
     &:nth-child(2) {
       position: absolute;
       background-color: #ffcd99;
-      border-radius: 5px;
+      border-radius: 4px;
       width: 0;
       height: 100%;
       left: 0;
