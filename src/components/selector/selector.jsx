@@ -26,8 +26,9 @@ const Selector = (props) => {
 
         select.current.onclick = () => {
             drop.current.classList.toggle("d-block");
-            icon.current.classList.toggle("r-180");
-            icon.current.classList.toggle("r-180-none");
+            select.current.firstElementChild.classList.toggle("r-180");
+            select.current.firstElementChild.classList.toggle("r-180-none");
+            console.log(select.current.firstElementChild)
         };
 
         drop.current.querySelectorAll("span").forEach(
@@ -39,14 +40,11 @@ const Selector = (props) => {
                     opt.innerHTML = s.innerText;
 
                     drop.current.classList.toggle("d-block");
-
-                    select.current.innerHTML = s.innerText + '<i class="fas fa-chevron-down r-180"></i>';
-                    icon.current.classList.toggle("r-180");
-                    icon.current.classList.toggle("r-180-none");
+                    select.current.innerHTML = s.innerText + '<i class="fas fa-chevron-down r-180-none"></i>';
                     //triggerEvent(input, "change");
                 }
         );
-    })
+    },[drop])
 
     return (
         <div>
@@ -56,10 +54,11 @@ const Selector = (props) => {
                 </select>
                 <div className="selected" ref={select}>
                     message
-                    <i className="fas fa-chevron-down r-180-none" ref={icon}/>
+                    <i className="fas fa-chevron-down r-180-none" ref={icon}></i>
                 </div>
                 <div className={"drop"} ref={drop}>
-                    <span data={"value"}>value</span>
+                    <span data={"test"}>test</span>
+                    <span data={"test2"}>test 2</span>
                 </div>
             </div>
         </div>
