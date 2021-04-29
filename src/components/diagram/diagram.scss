@@ -1,7 +1,8 @@
-.chartCircle{
+.chartCircle {
   display: block;
   width: auto;
-  circle{
+
+  circle {
     stroke-width: 10%;
     fill: none;
     cx: 50%;
@@ -10,17 +11,21 @@
     transition: 0.5s ease;
     transition-property: stroke-width;
     transform-origin: center center;
-    &:hover{
+
+    &:hover {
       stroke-width: 13%;
-      ~ text{
+
+      ~ text {
         opacity: 1;
       }
-      ~ text:nth-last-child(3n){
+
+      ~ text:nth-last-child(3n) {
         opacity: 0;
       }
     }
   }
-  text{
+
+  text {
     pointer-events: none;
     stroke-width: 0;
     font-family: helvetica, serif;
@@ -28,16 +33,19 @@
     transition: 0.3s ease;
     transition-property: opacity;
   }
-  & :nth-last-child(3){
+
+  & :nth-last-child(3) {
     opacity: 1;
     text-transform: uppercase;
     font-size: 70%;
   }
-  & :nth-last-child(2){
+
+  & :nth-last-child(2) {
     font-size: 70%;
-    font-weight:bold;
+    font-weight: bold;
   }
-  & :last-child{
+
+  & :last-child {
     font-size: 50%;
   }
 }
