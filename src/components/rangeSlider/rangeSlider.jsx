@@ -43,7 +43,7 @@ const RangeSlider = (props) => {
     }, [clicked])
 
     return (
-        <div style={{display: 'flex'}} className={"test"}>
+        <div style={{display: 'flex'}}>
             <div
                 ref={myBar}
                 className="chartSelector"
