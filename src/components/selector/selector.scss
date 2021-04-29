@@ -1,3 +1,100 @@
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background: white;
+}
+::-webkit-scrollbar-track {
+  background: white;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.9);
+  border-radius: 5px;
+  border: 2px solid white;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.9);
+}
+*{
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.9) #ffffff;
+  &:focus{
+    outline: 0px none;
+  }
+}
+
+
+
+
+
+.selector{
+  position: relative;
+  width: 200px;
+  border-bottom: 1px solid white;
+  text-align: left;
+
+  .value{
+    
+  }
+  .arrow{
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform-origin: center center;
+    transition: 0.2s ease-out;
+    transition-property: transform;
+  }
+  .droplist{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    overflow-y: scroll;
+    border: 1px solid white;
+    max-height: 0;
+    opacity: 0;
+    transition: 0.2s ease-out;
+    transition-property: max-height, opacity;
+    border-radius: 0 0 5px 5px;
+
+    &::-webkit-scrollbar {
+      border-radius: 0 0 5px 0;
+    }
+    &::-webkit-scrollbar-track {
+      border-radius: 0 0 5px 0;
+    }
+
+    span{
+      display: block;
+      cursor: pointer;
+      transition: 0.2s ease-out;
+      transition-property: color, background;
+
+      &.active{
+        background: white;
+        color: black;
+      }
+      
+      &:hover{
+        background: white;
+        color: black;
+      }
+    }
+  }
+  &.focus{
+    
+    .droplist{
+      max-height: 200px;
+      opacity: 1;
+    }
+    .arrow{
+      transform: rotate(180deg);
+    }
+  }
+}
+
+
+
+
 .custom-select {
   position: relative;
   padding: 5px;

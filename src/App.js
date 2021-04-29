@@ -5,6 +5,9 @@ import {useCallback, useState} from "react";
 import Selector from "./components/selector/selector";
 
 function App(callback, deps) {
+
+    const [selectValue,changeSelectValue] = useState("test1")
+
     // diagram & range slider
     // const fakeValues = [
     //     {name: "user 0", percent: 80, color: "#00ff00", lock: true, max: 80},
@@ -48,8 +51,16 @@ function App(callback, deps) {
                 {/*        />*/}
                 {/*    ))}*/}
                 {/*</div>*/}
+                <input type="text" />
                 <Selector
-
+                    options={[
+                        {value:"test1",name:"Test 1"},
+                        {value:"test2",name:"Test 2"},
+                        {value:"test3",name:"Test 3"},
+                        {value:"test4",name:"Test 4"}
+                    ]}
+                    value={selectValue}
+                    change={(value)=>changeSelectValue(value)}
                 />
             </header>
         </div>

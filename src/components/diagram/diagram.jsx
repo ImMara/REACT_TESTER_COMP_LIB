@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import '../../../../../web/REACT_TESTER_COMP_LIB/src/components/diagram/diagram.scss';
+import './diagram.scss';
 
 const Diagram = (props) => {
 

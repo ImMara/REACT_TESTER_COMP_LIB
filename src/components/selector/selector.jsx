@@ -1,65 +1,21 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
+import OutsideClickHandler from 'react-outside-click-handler'
 import './selector.scss';
 
 const Selector = (props) => {
 
-    const select = useRef(null)
-    const input = useRef(null)
-    const icon = useRef(null)
-    const drop = useRef(null)
-
-
-
-    useEffect(() => {
-
-        const triggerEvent = (el, type) => {
-            if ("createEvent" in document) {
-                let e = document.createEvent("HTMLEvents");
-                e.initEvent(type, false, true);
-                el.dispatchEvent(e);
-            } else {
-                let e = document.createEventObject();
-                e.eventType = type;
-                el.fireEvent("on" + e.eventType, e);
-            }
-        };
-
-        select.current.onclick = () => {
-            drop.current.classList.toggle("d-block");
-            select.current.firstElementChild.classList.toggle("r-180");
-            select.current.firstElementChild.classList.toggle("r-180-none");
-            console.log(select.current.firstElementChild)
-        };
-
-        drop.current.querySelectorAll("span").forEach(
-            (s) =>
-                s.onclick = () => {
-
-                    let opt = input.current.querySelector("option");
-                    opt.setAttribute("value", s.getAttribute("data"));
-                    opt.innerHTML = s.innerText;
-
-                    drop.current.classList.toggle("d-block");
-                    select.current.innerHTML = s.innerText + '<i class="fas fa-chevron-down r-180-none"></i>';
-                    //triggerEvent(input, "change");
-                }
-        );
-    },[drop])
+    const [focus,changeFocus] = useState(false)
 
     return (
         <div>
-            <div className={"custom-select"}>
-                <select name="" id="" ref={input}>
-                    <option value="">test</option>
-                </select>
-                <div className="selected" ref={select}>
-                    message
-                    <i className="fas fa-chevron-down r-180-none" ref={icon}></i>
-                </div>
-                <div className={"drop"} ref={drop}>
-                    <span data={"test"}>test</span>
-                    <span data={"test2"}>test 2</span>
-                </div>
+            <div className={focus? "selector focus":"selector"} tabindex="0" onFocus={()=>changeFocus(true)} onBlur={()=>changeFocus(false)} onClick={()=>changeFocus(!focus)}>
+                <div className="value">{props.value}</div>
+                <div className="arrow"><i className="fas fa-chevron-down"></i></div>
+                <OutsideClickHandler onOutsideClick={() => changeFocus(false)} >
+                    <div className="droplist">
+                        {props.options.map(option=>(<span data={option.value} onClick={()=>props.change(option.value)} className={(option.value==props.value)? "active":""}>{option.name}</span>))}
+                    </div>
+                </OutsideClickHandler>
             </div>
         </div>
     )
